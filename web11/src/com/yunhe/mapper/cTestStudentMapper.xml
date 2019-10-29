@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yunhe.mapper.cTestStudentMapper">
+
+	<select id="selectAll" resultType="com.yunhe.javabean.cTestStudent">
+
+		select * from cteststudent
+
+	</select>
+
+	<!-- 动态插入 cteststudent 对象 -->
+	<insert id="insertcTestStudent" parameterType="java.util.List">
+		insert all
+		<if test="list!=null and list.size()>0">
+			<foreach collection="list" index="index" item="cTestStudent">
+				into
+				cteststudent
+				(ID,NAME,AGE,SEX)
+				values
+				(
+				#{cTestStudent.ID},
+				#{cTestStudent.NAME},
+				#{cTestStudent.AGE},
+				#{cTestStudent.SEX})
+
+			</foreach>
+			select 1 from dual
+
+		</if>
+
+	</insert>
+	<!-- 动态删除cteststudent对象 -->
+	<delete id="deletecTestStudent" parameterType="java.util.List">
+		delete from cteststudent
+		<where>
+			<foreach collection="list" item="id" open=" id in("
+				separator="," close=")">
+				#{id}
+			</foreach>
+
+		</where>
+
+
+	</delete>
+	<!-- 动态更新 -->
+	<update id="updatecTestStudent" parameterType="com.yunhe.javabean.cTestStudent">
+	 update  cteststudent
+	 <set>
+	  <if test="NAME!=null and NAME!=''">NAME=#{NAME},</if>
+	  <if test="AGE!=null and AGE!=''">AGE=#{AGE},</if>
+	  <if test="SEX!=null and SEX!=''">SEX=#{SEX}</if>
+	 </set>
+	 where ID=#{ID}
+	</update>
+	
+	
+	
+	
+ 
+</mapper>

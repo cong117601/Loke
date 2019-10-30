@@ -33,6 +33,7 @@ public class Test {
 					rs.close();
 					ps.close();
 					connection.close();
+					System.out.println("修改它");
 	}
 	
 }
